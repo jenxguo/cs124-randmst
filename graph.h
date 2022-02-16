@@ -1,5 +1,3 @@
-void createGraph(int n, int d);
-
 typedef struct
 {
     int v;
@@ -7,3 +5,5 @@ typedef struct
     float weight;
 }
 edge;
+
+void createGraph(int n, int d, edge *graph);

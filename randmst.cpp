@@ -32,6 +32,17 @@ int main(int argc, char *argv[]) {
 }
 
 float calcAvgWeight(int flag, int n, int trials, int d) {
-    createGraph(5, 0);
-    return 0;
+    float totalWeight = 0;
+
+    for (int i = 0; i < trials; i++) {
+
+        // create graph
+        int numEdges = (n * (n-1)) / 2;
+        edge graph[numEdges];
+        createGraph(n, d, graph);
+
+        // generate MST
+    }
+
+    return totalWeight / trials;
 }

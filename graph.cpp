@@ -4,16 +4,11 @@
 #include <random>
 #include "graph.h"
 
-using namespace std;
-
-void createGraph(int n, int d);
+// void createGraph(int n, int d, edge*graph);
 float generateEdgeWeight(int d);
 float random01();
 
-void createGraph(int n, int d) {
-    int numEdges = (n * (n-1)) / 2;
-    edge graph[numEdges];
-
+void createGraph(int n, int d, edge *graph) {
     int count = 0;
 
     // generate edges from vertex i to vertex j
