@@ -2,16 +2,13 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string>
+#include <cstdlib>
+#include <ctime>
+#include "graph.h"
 
-typedef struct
-{
-    int v;
-    int u;
-    float weight;
-}
-edge;
+float calcAvgWeight(int flag, int n, int trials, int d);
 
-int main(int argc, char *argv[]){
+int main(int argc, char *argv[]) {
     //checks that there are command line args
     if (argc != 5)
     {
@@ -24,7 +21,17 @@ int main(int argc, char *argv[]){
     int numtrials = (int) strtol(argv[3], NULL, 10);
     int dimension = (int) strtol(argv[4], NULL, 10);
 
-    printf("%i, %i, %i \n", numpoints, numtrials, dimension);
+    // seed rand
+    srand (static_cast <unsigned> (time(0)));
 
+    float avgWeight = calcAvgWeight(flag, numpoints, numtrials, dimension);
+
+    printf("%f %i %i %i\n", avgWeight, numpoints, numtrials, dimension);
+
+    return 0;
+}
+
+float calcAvgWeight(int flag, int n, int trials, int d) {
+    createGraph(5, 0);
     return 0;
 }
