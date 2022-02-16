@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <random>
-#include "graph.h"
+#include "graph.hpp"
 
 // void createGraph(int n, int d, edge*graph);
 float generateEdgeWeight(int d);
@@ -25,10 +25,11 @@ void createGraph(int n, int d, edge *graph) {
         }
     }
 
-    // Test print: remove later
-    // for (int i = 0; i < numEdges; i++) {
-    //     printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v, graph[i].u, graph[i].weight);
-    // }
+    // Test print: feel free to comment out / remove later
+    int numEdges = (n * (n-1)) / 2;
+    for (int i = 0; i < numEdges; i++) {
+        printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v, graph[i].u, graph[i].weight);
+    }
 }
 
 float generateEdgeWeight(int d) {

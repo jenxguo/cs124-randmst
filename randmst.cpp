@@ -4,7 +4,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
-#include "graph.h"
+#include "graph.hpp"
 
 float calcAvgWeight(int flag, int n, int trials, int d);
 
