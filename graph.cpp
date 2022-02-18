@@ -3,6 +3,7 @@
 #include <iostream>
 #include <random>
 #include "graph.hpp"
+#include "unionfind.hpp"
 
 // void createGraph(int n, int d, edge*graph);
 float generateEdgeWeight(int d);
@@ -17,8 +18,8 @@ void createGraph(int n, int d, edge *graph) {
             float weight = generateEdgeWeight(d);
 
             // add adj. matrix edge from i to j
-            graph[count].v = i;
-            graph[count].u = j;
+            graph[count].v = MAKESET(i);
+            graph[count].u = MAKESET(j);
             graph[count].weight = weight;
 
             count ++;
@@ -28,7 +29,7 @@ void createGraph(int n, int d, edge *graph) {
     // Test print: feel free to comment out / remove later
     int numEdges = (n * (n-1)) / 2;
     for (int i = 0; i < numEdges; i++) {
-        printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v, graph[i].u, graph[i].weight);
+        printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
     }
 }
 

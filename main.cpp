@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "graph.hpp"
+#include "randmst.hpp"
 
 float calcAvgWeight(int flag, int n, int trials, int d);
 
@@ -42,6 +43,7 @@ float calcAvgWeight(int flag, int n, int trials, int d) {
         createGraph(n, d, graph);
 
         // generate MST
+        Kruskals(graph, n, numEdges);
     }
 
     return totalWeight / trials;
