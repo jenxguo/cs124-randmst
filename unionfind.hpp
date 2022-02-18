@@ -21,4 +21,7 @@ Node* LINK(Node* root1, Node* root2);
 /* Join two trees together. Return root of final tree. */
 Node* UNION(Node* node1, Node* node2);
 
+/* Frees memory of set. */
+void DESTROY(Node* node);
+
 #endif

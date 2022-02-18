@@ -25,12 +25,6 @@ void createGraph(int n, int d, edge *graph) {
             count ++;
         }
     }
-
-    // Test print: feel free to comment out / remove later
-    int numEdges = (n * (n-1)) / 2;
-    for (int i = 0; i < numEdges; i++) {
-        printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
-    }
 }
 
 float generateEdgeWeight(int d) {

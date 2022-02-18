@@ -7,6 +7,6 @@
 #include "graph.hpp"
 
 
-std::vector<float> Kruskals(edge *graph, int n, int numEdges);
+float Kruskals(edge *graph, int n, int numEdges);
 
 #endif

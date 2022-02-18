@@ -29,12 +29,17 @@ Node* FIND(Node* node){
 
 /* Link two roots together. Return the root of the combined tree. */
 Node* LINK(Node* root1, Node* root2){
-    if (root1->rank > root2->rank){
+    if (root1->rank > root2->rank) {
         root2->parent = root1;
         return root1;
     }
+    else if (root2->rank > root1->rank) {
+        root1->parent = root2;
+        return root2;
+    }
     else {
         root1->parent = root2;
+        root2->rank++;
         return root2;
     };
 };
@@ -45,3 +50,8 @@ Node* UNION(Node* node1, Node* node2){
     Node* root2 = FIND(node2);
     return LINK(root1, root2);
 };
+
+/* Frees memory of set. */
+void DESTROY(Node* node){
+    delete node;
+}
