@@ -24,21 +24,25 @@ float Kruskals(edge *graph, int n, int numEdges){
         printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
     }
 
-    int edgesAdded = 0;
+    printf("\nKRUSKALS\n");
 
     // Actual MST buidling phase
+    int edgesAdded = 0;
     for (int i = 0; i < numEdges; i++){
         Node* nodeV = graph[i].v;
         Node* nodeU = graph[i].u;
         printf("%ith iteration, root nodeV %i is %i, root nodeU %i is %i\n", i, nodeV->val, nodeV->parent->val, nodeU->val, nodeU->parent->val);
         if (FIND(nodeV) != FIND(nodeU)){
             X.push_back(graph[i].weight);
+            edgesAdded++;
             UNION(nodeV, nodeU);
         };
-        if (edgesAdded == numEdges - 1) {
+        if (edgesAdded == n - 1) {
             break;
         }
     }; 
+
+    printf("\nWEIGHTS IN MST\n");
 
     for (int i = 0; i < X.size(); i++) {
         float p = X[i];

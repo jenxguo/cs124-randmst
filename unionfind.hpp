@@ -16,7 +16,7 @@ Node* MAKESET(int i);
 Node* FIND(Node* node);
 
 /* Link two roots together. Return the root of the combined tree. */
-Node* LINK(Node* root1, Node* root2);
+Node* LINK(Node &root1, Node &root2);
 
 /* Join two trees together. Return root of final tree. */
 Node* UNION(Node* node1, Node* node2);

@@ -13,24 +13,23 @@ float random01();
 void createGraph(int n, int d, edge *graph) {
     int count = 0;
 
+    Node* nodes[n];
+    for (int i = 0; i < n; i++) {
+        nodes[i] = MAKESET(i);
+    }
+
     // generate edges from vertex i to vertex j
     for (int i = 0; i < n - 1; i++) {
         for (int j = i + 1; j < n; j++) {
             float weight = generateEdgeWeight(d);
 
             // add adj. matrix edge from i to j
-            graph[count].v = MAKESET(i);
-            graph[count].u = MAKESET(j);
+            graph[count].v = nodes[i];
+            graph[count].u = nodes[j];
             graph[count].weight = weight;
 
             count ++;
         }
-    }
-
-    // Test print: feel free to comment out / remove later
-    int numEdges = (n * (n-1)) / 2;
-    for (int i = 0; i < numEdges; i++) {
-        printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
     }
 
     /* Testing sort 
