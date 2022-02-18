@@ -9,4 +9,6 @@
 
 float Kruskals(edge *graph, int n, int numEdges);
 
+void MergeSort(edge *graph, int l, int r);
+
 #endif
