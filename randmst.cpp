@@ -29,6 +29,8 @@ float Kruskals(edge *graph, int n, int numEdges){
         printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
     }
 
+    int edgesAdded = 0;
+
     // Actual MST buidling phase
     for (int i = 0; i < numEdges; i++){
         Node* nodeV = graph[i].v;
@@ -38,6 +40,9 @@ float Kruskals(edge *graph, int n, int numEdges){
             X.push_back(graph[i].weight);
             UNION(nodeV, nodeU);
         };
+        if (edgesAdded == numEdges - 1) {
+            break;
+        }
     }; 
 
     for (int i = 0; i < X.size(); i++) {
