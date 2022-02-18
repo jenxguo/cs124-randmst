@@ -32,8 +32,7 @@ Node* LINK(Node* root1, Node* root2){
     if (root1->rank > root2->rank){
         root2->parent = root1;
         return root1;
-    }
-    else {
+    } else {
         root1->parent = root2;
         return root2;
     };

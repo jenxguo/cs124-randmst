@@ -4,6 +4,7 @@
 #include <random>
 #include "graph.hpp"
 #include "unionfind.hpp"
+#include "randmst.hpp"
 
 // void createGraph(int n, int d, edge*graph);
 float generateEdgeWeight(int d);
@@ -31,6 +32,16 @@ void createGraph(int n, int d, edge *graph) {
     for (int i = 0; i < numEdges; i++) {
         printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
     }
+
+    /* Testing sort 
+    printf("\n now we sort \n");
+
+    MergeSort(graph, 0, numEdges-1);
+
+    for (int i = 0; i < numEdges; i++) {
+        printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
+    }
+    */
 }
 
 float generateEdgeWeight(int d) {

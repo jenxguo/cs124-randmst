@@ -6,11 +6,6 @@
 #include "graph.hpp"
 #include "randmst.hpp"
 
-/*
-Ayana's TODO:
-- sort out MakeSet error
-- sort out errors when I run make in terminal
-*/
 
 void MergeSort(edge *graph, int l, int r);
 void Merge(edge *graph, int l, int m, int r);
@@ -20,7 +15,7 @@ std::vector<float> Kruskals(edge *graph, int n, int numEdges){
     std::vector<float> X;
 
     // Sort edges in ascending order
-    MergeSort(graph, 0, numEdges-1);
+    MergeSort(graph, 0, numEdges - 1);
 
     // Actual MST buidling phase
     for (int i = 0; i < numEdges; i++){
@@ -35,17 +30,18 @@ std::vector<float> Kruskals(edge *graph, int n, int numEdges){
     return X;
 };
 
+
 void Merge(edge *graph, int l, int m, int r){
     int len1 = m - l + 1;
     int len2 = r - m;
 
-    float L[len1], R[len2];
+    edge L[len1], R[len2];
 
     for (int i = 0; i < len1; i++) {
-        L[i] = graph[l + i].weight;
+        L[i] = graph[l + i];
     }
     for (int j = 0; j < len2; j++) {
-        R[j] = graph[m + 1 + j].weight;
+        R[j] = graph[m + 1 + j];
     }
 
     int i, j, k;
@@ -54,24 +50,24 @@ void Merge(edge *graph, int l, int m, int r){
     k = l;
 
     while (i < len1 && j < len2) {
-        if (L[i] <= R[j]) {
-            graph[k].weight = L[i];
+        if (L[i].weight <= R[j].weight) {
+            graph[k] = L[i];
             i++;
         } else {
-            graph[k].weight = R[j];
+            graph[k] = R[j];
             j++;
         }
         k++;
     }
 
     while (i < len1) {
-        graph[k].weight = L[i];
+        graph[k] = L[i];
         i++;
         k++;
     }
 
     while (j < len2) {
-        graph[k].weight = L[j];
+        graph[k] = R[j];
         j++;
         k++;
     }
@@ -79,7 +75,7 @@ void Merge(edge *graph, int l, int m, int r){
 
 void MergeSort(edge *graph, int l, int r){
     if (l < r){
-        int m = (l+r-1)/2;
+        int m = l + (r - l) / 2;
         MergeSort(graph, l, m);
         MergeSort(graph, m+1, r);
         Merge(graph, l, m, r);
