@@ -4,8 +4,11 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+#include <fstream>
 #include "graph.hpp"
 #include "randmst.hpp"
+using namespace std;
 
 float calcAvgWeight(int flag, int n, int trials, int d);
 float getMSTWeight(int n, int d);
@@ -35,6 +38,10 @@ int main(int argc, char *argv[]) {
 
     printf("%f %i %i %i\n", avgWeight, numpoints, numtrials, dimension);
 
+    ofstream myfile;
+    myfile.open("data.txt", ofstream::app);
+    myfile << numpoints << ", " << numtrials << ", " << dimension << ", " << avgWeight << endl;
+    myfile.close();
     return 0;
 }
 
@@ -57,9 +64,9 @@ float getMSTWeight(int n, int d) {
     createGraph(n, d, graph);
 
     // Test print Graph: feel free to comment out / remove later
-    for (int i = 0; i < numEdges; i++) {
-        printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
-    }
+    // for (int i = 0; i < numEdges; i++) {
+    //     printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
+    // }
 
     // generate MST
     float sumOfTotalMST = Kruskals(graph, n, numEdges);

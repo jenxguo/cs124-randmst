@@ -18,20 +18,20 @@ float Kruskals(edge *graph, int n, int numEdges){
     // Sort edges in ascending order
     MergeSort(graph, 0, numEdges - 1);
 
-    printf("\nPOST SORT\n");
+    // printf("\nPOST SORT\n");
     // Test print Graph: feel free to comment out / remove later
-    for (int i = 0; i < numEdges; i++) {
-        printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
-    }
+    // for (int i = 0; i < numEdges; i++) {
+    //     printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
+    // }
 
-    printf("\nKRUSKALS\n");
+    // printf("\nKRUSKALS\n");
 
     // Actual MST buidling phase
     int edgesAdded = 0;
     for (int i = 0; i < numEdges; i++){
         Node* nodeV = graph[i].v;
         Node* nodeU = graph[i].u;
-        printf("%ith iteration, root nodeV %i is %i, root nodeU %i is %i\n", i, nodeV->val, nodeV->parent->val, nodeU->val, nodeU->parent->val);
+        // printf("%ith iteration, root nodeV %i is %i, root nodeU %i is %i\n", i, nodeV->val, nodeV->parent->val, nodeU->val, nodeU->parent->val);
         if (FIND(nodeV) != FIND(nodeU)){
             X.push_back(graph[i].weight);
             edgesAdded++;
@@ -42,11 +42,11 @@ float Kruskals(edge *graph, int n, int numEdges){
         }
     }; 
 
-    printf("\nWEIGHTS IN MST\n");
+    // printf("\nWEIGHTS IN MST\n");
 
     for (int i = 0; i < X.size(); i++) {
         float p = X[i];
-        printf("%ith weight in X: %f\n", i, p);
+        // printf("%ith weight in X: %f\n", i, p);
     }
 
     return std::accumulate(X.begin(), X.end(), 0.0);
