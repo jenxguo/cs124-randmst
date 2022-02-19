@@ -10,13 +10,13 @@
 float generateEdgeWeight(int d);
 float random01();
 
-Node* createGraph(int n, int d, edge *graph) {
+void createGraph(int n, int d, edge *graph) {
     int count = 0;
 
-    Node* nodes[n];
-    for (int i = 0; i < n; i++) {
-        nodes[i] = MAKESET(i);
-    }
+    // Node* nodes[n];
+    // for (int i = 0; i < n; i++) {
+    //     nodes[i] = MAKESET(i);
+    // }
 
     // generate edges from vertex i to vertex j
     for (int i = 0; i < n - 1; i++) {
@@ -27,8 +27,8 @@ Node* createGraph(int n, int d, edge *graph) {
             float weight = generateEdgeWeight(d);
 
             // add adj. matrix edge from i to j
-            e->v = nodes[i];
-            e->u = nodes[j];
+            e->v = i;
+            e->u = j;
             e->weight = weight;
 
             graph[count] = *e;
@@ -36,8 +36,6 @@ Node* createGraph(int n, int d, edge *graph) {
             count ++;
         }
     }
-
-    return *nodes;
 
     /* Testing sort 
     printf("\n now we sort \n");

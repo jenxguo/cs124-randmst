@@ -11,7 +11,7 @@
 void MergeSort(edge *graph, int l, int r);
 void Merge(edge *graph, int l, int m, int r);
 
-float Kruskals(edge *graph, int n, int numEdges){
+float Kruskals(edge *graph, Node *sets, int n, int numEdges){
     // X stores the weights of the edges in the MST
     std::vector<float> X;
 
@@ -29,8 +29,8 @@ float Kruskals(edge *graph, int n, int numEdges){
     // Actual MST buidling phase
     int edgesAdded = 0;
     for (int i = 0; i < numEdges; i++){
-        Node* nodeV = graph[i].v;
-        Node* nodeU = graph[i].u;
+        Node* nodeV = &sets[graph[i].v];
+        Node* nodeU = &sets[graph[i].u];
         // printf("%ith iteration, root nodeV %i is %i, root nodeU %i is %i\n", i, nodeV->val, nodeV->parent->val, nodeU->val, nodeU->parent->val);
         if (FIND(nodeV) != FIND(nodeU)){
             X.push_back(graph[i].weight);

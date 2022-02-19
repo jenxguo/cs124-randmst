@@ -4,13 +4,13 @@
 
 typedef struct
 {
-    Node* v;
-    Node* u;
+    int v;
+    int u;
     float weight;
 }
 edge;
 
-Node* createGraph(int n, int d, edge *graph);
+void createGraph(int n, int d, edge *graph);
 
 void destroyGraph(int numEdges, edge* graph);
 

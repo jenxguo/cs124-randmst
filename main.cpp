@@ -8,6 +8,7 @@
 #include <fstream>
 #include "graph.hpp"
 #include "randmst.hpp"
+#include "unionfind.hpp"
 using namespace std;
 
 float calcAvgWeight(int flag, int n, int trials, int d);
@@ -60,8 +61,13 @@ float getMSTWeight(int n, int d) {
     int numEdges = (n * (n-1)) / 2;
     edge* graph = new edge[numEdges];
 
+    Node *sets[n];
+    for (int i = 0; i < n; i++) {
+        sets[i] = MAKESET(i);
+    }
+
     // populate graph with edge objects
-    Node* sets = createGraph(n, d, graph);
+    createGraph(n, d, graph);
 
     // Test print Graph: feel free to comment out / remove later
     // for (int i = 0; i < numEdges; i++) {
@@ -69,7 +75,7 @@ float getMSTWeight(int n, int d) {
     // }
 
     // generate MST
-    float sumOfTotalMST = Kruskals(graph, n, numEdges);
+    float sumOfTotalMST = Kruskals(graph, *sets, n, numEdges);
     printf("sum of total mst %f\n", sumOfTotalMST);
 
     // destroy everything
@@ -77,7 +83,7 @@ float getMSTWeight(int n, int d) {
     delete[] graph;
     
     for (int i = 0; i < n; i++) {
-        DESTROY(&sets[i]);
+        DESTROY(sets[i]);
     }
 
     return sumOfTotalMST;
