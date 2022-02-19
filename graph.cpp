@@ -10,7 +10,7 @@
 float generateEdgeWeight(int d);
 float random01();
 
-void createGraph(int n, int d, edge *graph) {
+Node* createGraph(int n, int d, edge *graph) {
     int count = 0;
 
     Node* nodes[n];
@@ -31,6 +31,8 @@ void createGraph(int n, int d, edge *graph) {
             count ++;
         }
     }
+
+    return *nodes;
 
     /* Testing sort 
     printf("\n now we sort \n");

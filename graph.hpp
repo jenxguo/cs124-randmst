@@ -10,6 +10,6 @@ typedef struct
 }
 edge;
 
-void createGraph(int n, int d, edge *graph);
+Node* createGraph(int n, int d, edge *graph);
 
 #endif

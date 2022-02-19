@@ -58,10 +58,10 @@ float calcAvgWeight(int flag, int n, int trials, int d) {
 float getMSTWeight(int n, int d) {
     // initialize graph
     int numEdges = (n * (n-1)) / 2;
-    edge graph[numEdges];
+    edge* graph = new edge[numEdges];
 
     // populate graph with edge objects
-    createGraph(n, d, graph);
+    Node* sets = createGraph(n, d, graph);
 
     // Test print Graph: feel free to comment out / remove later
     // for (int i = 0; i < numEdges; i++) {
@@ -71,5 +71,12 @@ float getMSTWeight(int n, int d) {
     // generate MST
     float sumOfTotalMST = Kruskals(graph, n, numEdges);
     printf("sum of total mst %f\n", sumOfTotalMST);
+
+    // destroy everything
+    for (int i = 0; i < n; i++) {
+        DESTROY(&sets[i]);
+    }
+    delete[] graph;
+    
     return sumOfTotalMST;
 }
