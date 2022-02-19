@@ -3,6 +3,13 @@
 #include <fstream>
 using namespace std;
 
+/* 
+How to use: 
+- "make"
+- "g++ -Wall -o runtests ./runtests.cpp"
+- "./runtests"
+*/
+
 int main() {
     ofstream myfile;
     myfile.open ("data.txt");
