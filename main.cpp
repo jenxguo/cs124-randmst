@@ -73,10 +73,12 @@ float getMSTWeight(int n, int d) {
     printf("sum of total mst %f\n", sumOfTotalMST);
 
     // destroy everything
+    destroyGraph(numEdges, graph);
+    delete[] graph;
+    
     for (int i = 0; i < n; i++) {
         DESTROY(&sets[i]);
     }
-    delete[] graph;
-    
+
     return sumOfTotalMST;
 }

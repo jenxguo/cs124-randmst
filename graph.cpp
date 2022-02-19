@@ -21,12 +21,17 @@ Node* createGraph(int n, int d, edge *graph) {
     // generate edges from vertex i to vertex j
     for (int i = 0; i < n - 1; i++) {
         for (int j = i + 1; j < n; j++) {
+
+            edge* e = new edge();
+
             float weight = generateEdgeWeight(d);
 
             // add adj. matrix edge from i to j
-            graph[count].v = nodes[i];
-            graph[count].u = nodes[j];
-            graph[count].weight = weight;
+            e->v = nodes[i];
+            e->u = nodes[j];
+            e->weight = weight;
+
+            graph[count] = *e;
 
             count ++;
         }
@@ -43,6 +48,12 @@ Node* createGraph(int n, int d, edge *graph) {
         printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
     }
     */
+}
+
+void destroyGraph(int numEdges, edge* graph) {
+    for (int i = 0; i < numEdges; i++) {
+        delete &graph[i];
+    }
 }
 
 float generateEdgeWeight(int d) {
