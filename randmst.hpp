@@ -7,8 +7,6 @@
 #include "graph.hpp"
 
 
-float Kruskals(edge *graph, Node *sets, int n, int numEdges);
-
-void MergeSort(edge *graph, int l, int r);
+float Kruskals(edge* graph, int n, int numEdges);
 
 #endif

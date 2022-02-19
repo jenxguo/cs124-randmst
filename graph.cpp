@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <random>
+#include <vector>
 #include "graph.hpp"
 #include "unionfind.hpp"
 #include "randmst.hpp"
@@ -9,33 +10,45 @@
 // void createGraph(int n, int d, edge*graph);
 float generateEdgeWeight(int d);
 float random01();
+float findThreshold(int n, int d);
 
-void createGraph(int n, int d, edge *graph) {
+std::pair<int, edge* > createGraph(int n, int d) {
+    // int numEdges = (n+1)*(n)/2;
+    // edge **graph = malloc(cap * sizeof(edge*));
+    int lenGraph = n;
+    edge* graph = (edge*) malloc(lenGraph * sizeof(edge));
     int count = 0;
-
-    // Node* nodes[n];
-    // for (int i = 0; i < n; i++) {
-    //     nodes[i] = MAKESET(i);
-    // }
 
     // generate edges from vertex i to vertex j
     for (int i = 0; i < n - 1; i++) {
         for (int j = i + 1; j < n; j++) {
 
-            edge* e = new edge();
+            edge e;
+
+            float threshold = findThreshold(n, d);
 
             float weight = generateEdgeWeight(d);
 
-            // add adj. matrix edge from i to j
-            e->v = i;
-            e->u = j;
-            e->weight = weight;
+            if (weight < threshold) {
+                // add adj. matrix edge from i to j
+                e.v = i;
+                e.u = j;
+                e.weight = weight;
 
-            graph[count] = *e;
+                graph[count] = e;
 
-            count ++;
+                count ++;
+            }
+
+            // remalloc, increase size of graph array if need to
+            if (count >= lenGraph) {
+                graph = (edge*) realloc((void*) graph, (lenGraph * 2) * sizeof(edge));
+                lenGraph *= 2;
+            }
         }
     }
+
+    return std::make_pair(count, graph);
 
     /* Testing sort 
     printf("\n now we sort \n");
@@ -49,8 +62,11 @@ void createGraph(int n, int d, edge *graph) {
 }
 
 void destroyGraph(int numEdges, edge* graph) {
+
     for (int i = 0; i < numEdges; i++) {
-        delete &graph[i];
+        printf("trying to free edge from %i to %i wit weight %f\n", graph[i].v, graph[i].u, graph[i].weight);
+        delete &(graph[i]);
+        printf("freed\n");
     }
 }
 
@@ -97,4 +113,22 @@ float generateEdgeWeight(int d) {
 
 float random01() {
     return (float) (rand()) / (float) (RAND_MAX);
+}
+
+float findThreshold(int n, int d) {
+    if (d == 0) {
+        if (n < 10) {
+            return 1.0;
+        }
+        else if (n < 1000) {
+            return 0.2;
+        }
+        else if (n < 10000) {
+            return 0.01;
+        }
+        else if (n < 300000) {
+            return 0.00008;
+        }
+    }
+    return 0.2;
 }

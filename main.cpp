@@ -4,6 +4,7 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include "graph.hpp"
@@ -58,33 +59,30 @@ float calcAvgWeight(int flag, int n, int trials, int d) {
 
 float getMSTWeight(int n, int d) {
     // initialize graph
-    int numEdges = (n * (n-1)) / 2;
-    edge* graph = new edge[numEdges];
+    // int numEdges = (n * (n-1)) / 2;
 
-    Node *sets[n];
-    for (int i = 0; i < n; i++) {
-        sets[i] = MAKESET(i);
-    }
+    // std::vector<edge> graph;
+    // edge* graph = new edge[numEdges];
 
     // populate graph with edge objects
-    createGraph(n, d, graph);
+    std::pair<int, edge* > res = createGraph(n, d);
+    int numEdges = std::get<0>(res);
+    edge* graph = std::get<1>(res);
+
+    printf("num edges %i\n", numEdges);
 
     // Test print Graph: feel free to comment out / remove later
-    // for (int i = 0; i < numEdges; i++) {
-    //     printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
-    // }
+    for (int i = 0; i < numEdges; i++) {
+        printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v, graph[i].u, graph[i].weight);
+    }
 
     // generate MST
-    float sumOfTotalMST = Kruskals(graph, *sets, n, numEdges);
+    float sumOfTotalMST = Kruskals(graph, n, numEdges);
     printf("sum of total mst %f\n", sumOfTotalMST);
 
     // destroy everything
-    destroyGraph(numEdges, graph);
-    delete[] graph;
-    
-    for (int i = 0; i < n; i++) {
-        DESTROY(sets[i]);
-    }
+    // destroyGraph(numEdges, graph);
+    // delete[] graph;
 
     return sumOfTotalMST;
 }

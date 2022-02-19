@@ -8,20 +8,25 @@
 #include "randmst.hpp"
 
 
-void MergeSort(edge *graph, int l, int r);
-void Merge(edge *graph, int l, int m, int r);
+void MergeSort(edge* graph, int l, int r);
+void Merge(edge* graph, int l, int m, int r);
 
-float Kruskals(edge *graph, Node *sets, int n, int numEdges){
+float Kruskals(edge* graph, int n, int numEdges){
     // X stores the weights of the edges in the MST
     std::vector<float> X;
 
     // Sort edges in ascending order
     MergeSort(graph, 0, numEdges - 1);
 
+    Node *nodes[n];
+    for (int i = 0; i < n; i++) {
+        nodes[i] = MAKESET(i);
+    }
+
     // printf("\nPOST SORT\n");
     // Test print Graph: feel free to comment out / remove later
     // for (int i = 0; i < numEdges; i++) {
-    //     printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
+    //     printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v, graph[i].u, graph[i].weight);
     // }
 
     // printf("\nKRUSKALS\n");
@@ -29,8 +34,8 @@ float Kruskals(edge *graph, Node *sets, int n, int numEdges){
     // Actual MST buidling phase
     int edgesAdded = 0;
     for (int i = 0; i < numEdges; i++){
-        Node* nodeV = &sets[graph[i].v];
-        Node* nodeU = &sets[graph[i].u];
+        Node* nodeV = nodes[graph[i].v];
+        Node* nodeU = nodes[graph[i].u];
         // printf("%ith iteration, root nodeV %i is %i, root nodeU %i is %i\n", i, nodeV->val, nodeV->parent->val, nodeU->val, nodeU->parent->val);
         if (FIND(nodeV) != FIND(nodeU)){
             X.push_back(graph[i].weight);
@@ -49,11 +54,16 @@ float Kruskals(edge *graph, Node *sets, int n, int numEdges){
         // printf("%ith weight in X: %f\n", i, p);
     }
 
+    // destroy node
+    for (int i = 0; i < n; i++) {
+        DESTROY(nodes[i]);
+    }
+
     return std::accumulate(X.begin(), X.end(), 0.0);
 };
 
 
-void Merge(edge *graph, int l, int m, int r){
+void Merge(edge* graph, int l, int m, int r){
     int len1 = m - l + 1;
     int len2 = r - m;
 
@@ -95,7 +105,7 @@ void Merge(edge *graph, int l, int m, int r){
     }
 };
 
-void MergeSort(edge *graph, int l, int r){
+void MergeSort(edge* graph, int l, int r){
     if (l < r){
         int m = l + (r - l) / 2;
         MergeSort(graph, l, m);
