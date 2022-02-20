@@ -8,7 +8,6 @@
 #include "randmst.hpp"
 
 // void createGraph(int n, int d, edge*graph);
-float generateEdgeWeight(int d);
 float random01();
 float findThreshold(int n, int d);
 
@@ -21,29 +20,65 @@ std::pair<int, edge* > createGraph(int n, int d) {
 
     float threshold = findThreshold(n, d);
 
-    // generate edges from vertex i to vertex j
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = i + 1; j < n; j++) {
-
-            edge e;
-
-            float weight = generateEdgeWeight(d);
-
-            if (weight < threshold) {
-                // add adj. matrix edge from i to j
-                e.v = i;
-                e.u = j;
-                e.weight = weight;
-
-                graph[count] = e;
-
-                count++;
+    if (d == 0) {
+        // generate edges from vertex i to vertex j
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                edge e;
+                float weight = random01();
+                if (weight < threshold) {
+                    // add adj. matrix edge from i to j
+                    e.v = i;
+                    e.u = j;
+                    e.weight = weight;
+                    graph[count] = e;
+                    count++;
+                }
+                // remalloc, increase size of graph array if need to
+                if (count >= lenGraph) {
+                    graph = (edge*) realloc((void*) graph, (lenGraph * 2) * sizeof(edge));
+                    lenGraph *= 2;
+                }
             }
+        }
 
-            // remalloc, increase size of graph array if need to
-            if (count >= lenGraph) {
-                graph = (edge*) realloc((void*) graph, (lenGraph * 2) * sizeof(edge));
-                lenGraph *= 2;
+    } else {
+        // generate vertex positions
+        float vertexPositions[n][d];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < d; j++) {
+                vertexPositions[i][j] = random01();
+            }
+        }
+
+         // generate edges from vertex i to vertex j
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                edge e;
+
+                // find edge weight using distance formula
+                float weight = 0;
+                for (int k = 0; k < d; k++) {
+                    weight += pow(vertexPositions[i][k] - vertexPositions[j][k], 2);
+                }
+                weight = sqrt(weight);
+
+                if (weight < threshold) {
+                    // add adj. matrix edge from i to j
+                    e.v = i;
+                    e.u = j;
+                    e.weight = weight;
+
+                    graph[count] = e;
+
+                    count++;
+                }
+
+                // remalloc, increase size of graph array if need to
+                if (count >= lenGraph) {
+                    graph = (edge*) realloc((void*) graph, (lenGraph * 2) * sizeof(edge));
+                    lenGraph *= 2;
+                }
             }
         }
     }
@@ -61,55 +96,14 @@ std::pair<int, edge* > createGraph(int n, int d) {
     */
 }
 
-void destroyGraph(int numEdges, edge* graph) {
+// void destroyGraph(int numEdges, edge* graph) {
 
-    for (int i = 0; i < numEdges; i++) {
-        printf("trying to free edge from %i to %i wit weight %f\n", graph[i].v, graph[i].u, graph[i].weight);
-        delete &(graph[i]);
-        printf("freed\n");
-    }
-}
-
-float generateEdgeWeight(int d) {
-    // generate random weight between 0 and 1
-    if (d == 0) {
-        return random01();
-    }
-    // generate random weight in unit sq
-    else if (d == 2)
-    {
-        float x1 = random01();
-        float x2 = random01();
-        float y1 = random01();
-        float y2 = random01();
-        return sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2));
-    }
-    // generate random weight in unit cube
-    else if (d == 3)
-    {
-        float x1 = random01();
-        float x2 = random01();
-        float y1 = random01();
-        float y2 = random01();
-        float z1 = random01();
-        float z2 = random01();
-        return sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2) + pow((z2 - z1), 2));
-    }
-    // generate random weight in unit hypercube
-    else if (d == 4)
-    {
-        float x1 = random01();
-        float x2 = random01();
-        float y1 = random01();
-        float y2 = random01();
-        float z1 = random01();
-        float z2 = random01();
-        float h1 = random01();
-        float h2 = random01();
-        return sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2) + pow((z2 - z1), 2) + pow((h2 - h1), 2));
-    }
-    return 0;
-}
+//     for (int i = 0; i < numEdges; i++) {
+//         printf("trying to free edge from %i to %i wit weight %f\n", graph[i].v, graph[i].u, graph[i].weight);
+//         delete &(graph[i]);
+//         printf("freed\n");
+//     }
+// }
 
 float random01() {
     return (float) (rand()) / (float) (RAND_MAX);
@@ -127,7 +121,7 @@ float findThreshold(int n, int d) {
             return 0.005;
         }
         else if (d == 3) {
-            return 0.1;
+            return 0.08;
         }
         else if (d == 4) {
             return 0.2;
