@@ -59,6 +59,8 @@ float Kruskals(edge* graph, int n, int numEdges){
         DESTROY(nodes[i]);
     }
 
+    // modify slightly to return largest edge
+    // return X[X.size() - 1];
     return std::accumulate(X.begin(), X.end(), 0.0);
 };
 

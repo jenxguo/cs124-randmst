@@ -19,13 +19,13 @@ std::pair<int, edge* > createGraph(int n, int d) {
     edge* graph = (edge*) malloc(lenGraph * sizeof(edge));
     int count = 0;
 
+    float threshold = findThreshold(n, d);
+
     // generate edges from vertex i to vertex j
     for (int i = 0; i < n - 1; i++) {
         for (int j = i + 1; j < n; j++) {
 
             edge e;
-
-            float threshold = findThreshold(n, d);
 
             float weight = generateEdgeWeight(d);
 
@@ -37,7 +37,7 @@ std::pair<int, edge* > createGraph(int n, int d) {
 
                 graph[count] = e;
 
-                count ++;
+                count++;
             }
 
             // remalloc, increase size of graph array if need to
@@ -116,19 +116,38 @@ float random01() {
 }
 
 float findThreshold(int n, int d) {
-    if (d == 0) {
-        if (n < 10) {
-            return 1.0;
+    if (n < 20) {
+        return 1;
+    }
+    else if (n > 50000) {
+        if (d == 0) {
+            return 0.00005;
         }
-        else if (n < 1000) {
-            return 0.2;
-        }
-        else if (n < 10000) {
+        else if (d == 2) {
             return 0.01;
         }
-        else if (n < 300000) {
-            return 0.00008;
+        else if (d == 3) {
+            return 0.001;
+        }
+        else if (d == 4) {
+            return 0.001;
         }
     }
-    return 0.2;
+    else if (d == 0) {
+        float safety = 2/n;
+        return (1.65 * pow(n, -0.769)) + safety;
+    }
+    else if (d == 2) {
+        float safety = 2/n;
+        return (0.941 * pow(n, -0.423)) + safety;
+    }
+    else if (d == 3) {
+        float safety = 2/n;
+        return (0.923 * pow(n, -0.283)) + safety;
+    }
+    else if (d == 4) {
+        float safety = 2/n;
+        return (1.07 * pow(n, -0.236)) + safety;
+    }
+    return 1;
 }

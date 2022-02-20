@@ -16,17 +16,20 @@ int main() {
     myfile << ("numpoints, numtrials, dimension, avgWeight\n");
     myfile.close();
 
+    int numpoints[11] = {128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072};
+
     for (int dimension = 0; dimension < 5; dimension++){
         if (dimension == 1){
             continue;
         }
 
-        for (int numpoints = 5; numpoints <= 20; numpoints += 5){
-                std::string line = "./randmst 0 ";
-                line += to_string(numpoints);
-                line += " 3 ";
-                line += to_string(dimension);
-                std::system(line.c_str());
+        for (int i = 0; i < 11; i++) {
+            int n = numpoints[i];
+            std::string line = "./randmst 0 ";
+            line += to_string(n);
+            line += " 5 ";
+            line += to_string(dimension);
+            std::system(line.c_str());
         }
     }
 

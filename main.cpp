@@ -33,9 +33,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // seed rand
-    srand (static_cast <unsigned> (time(0)));
-
     float avgWeight = calcAvgWeight(flag, numpoints, numtrials, dimension);
 
     printf("%f %i %i %i\n", avgWeight, numpoints, numtrials, dimension);
@@ -58,6 +55,9 @@ float calcAvgWeight(int flag, int n, int trials, int d) {
 }
 
 float getMSTWeight(int n, int d) {
+
+    // reseed rand
+    srand (static_cast <unsigned> (time(0)));
     // initialize graph
     // int numEdges = (n * (n-1)) / 2;
 
@@ -72,9 +72,9 @@ float getMSTWeight(int n, int d) {
     printf("num edges %i\n", numEdges);
 
     // Test print Graph: feel free to comment out / remove later
-    for (int i = 0; i < numEdges; i++) {
-        printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v, graph[i].u, graph[i].weight);
-    }
+    // for (int i = 0; i < numEdges; i++) {
+    //     printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v, graph[i].u, graph[i].weight);
+    // }
 
     // generate MST
     float sumOfTotalMST = Kruskals(graph, n, numEdges);
