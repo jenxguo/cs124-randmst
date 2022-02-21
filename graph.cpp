@@ -113,6 +113,20 @@ float findThreshold(int n, int d) {
     if (n < 20) {
         return 1;
     }
+    else if (n > 70000) {
+        if (d == 0) {
+            return 0.00005;
+        }
+        else if (d == 2) {
+            return 0.005;
+        }
+        else if (d == 3) {
+            return 0.02;
+        }
+        else if (d == 4) {
+            return 0.06;
+        }
+    }
     else if (n > 50000) {
         if (d == 0) {
             return 0.00005;
@@ -121,10 +135,10 @@ float findThreshold(int n, int d) {
             return 0.005;
         }
         else if (d == 3) {
-            return 0.08;
+            return 0.04;
         }
         else if (d == 4) {
-            return 0.2;
+            return 0.08;
         }
     }
     else if (d == 0) {
