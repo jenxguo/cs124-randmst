@@ -6,17 +6,30 @@
 #include "unionfind.hpp"
 #include "graph.hpp"
 #include "randmst.hpp"
-
+#include <chrono>
+#include <fstream>
 
 void MergeSort(edge* graph, int l, int r);
 void Merge(edge* graph, int l, int m, int r);
+void QuickSort(edge* graph, int start, int end);
+int partition(edge* graph, int start, int end);
 
 float Kruskals(edge* graph, int n, int numEdges){
+    using std::chrono::high_resolution_clock;
+    using std::chrono::duration;
+    using std::chrono::milliseconds;
+
+    // Array keeps track of whether each vertex is in the MST (validity)
+    int validity[n];
+    memset( validity, 0, n*sizeof(int) );
+
+    std::chrono::high_resolution_clock::time_point kruskalstart = high_resolution_clock::now();
+
     // X stores the weights of the edges in the MST
     std::vector<float> X;
 
     // Sort edges in ascending order
-    MergeSort(graph, 0, numEdges - 1);
+    QuickSort(graph, 0, numEdges - 1);
 
     Node *nodes[n];
     for (int i = 0; i < n; i++) {
@@ -24,7 +37,7 @@ float Kruskals(edge* graph, int n, int numEdges){
     }
 
     // printf("\nPOST SORT\n");
-    // Test print Graph: feel free to comment out / remove later
+    // // Test print Graph: feel free to comment out / remove later
     // for (int i = 0; i < numEdges; i++) {
     //     printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v, graph[i].u, graph[i].weight);
     // }
@@ -39,29 +52,95 @@ float Kruskals(edge* graph, int n, int numEdges){
         // printf("%ith iteration, root nodeV %i is %i, root nodeU %i is %i\n", i, nodeV->val, nodeV->parent->val, nodeU->val, nodeU->parent->val);
         if (FIND(nodeV) != FIND(nodeU)){
             X.push_back(graph[i].weight);
+            // printf("edge (%i, %i) added\n", nodeV->val, nodeU->val);
+            validity[nodeV->val] = 1;
+            validity[nodeU->val] = 1;
             edgesAdded++;
             UNION(nodeV, nodeU);
         };
         if (edgesAdded == n - 1) {
+            printf("break now\n");
             break;
         }
     }; 
 
     // printf("\nWEIGHTS IN MST\n");
 
-    for (int i = 0; i < X.size(); i++) {
-        float p = X[i];
-        // printf("%ith weight in X: %f\n", i, p);
-    }
+    // for (int i = 0; i < X.size(); i++) {
+    //     float p = X[i];
+    //     // printf("%ith weight in X: %f\n", i, p);
+    // }
 
     // destroy node
     for (int i = 0; i < n; i++) {
         DESTROY(nodes[i]);
     }
 
+    std::chrono::high_resolution_clock::time_point kruskalend = high_resolution_clock::now();
+    duration<double, std::milli> ms_double = kruskalend - kruskalstart;
+
+    // Check the validity of the MST
+    int missingVertices = 0;
+    for (int i = 0; i < n; i++) {
+        if (validity[i] == 0) {
+            missingVertices++;
+        }
+    }
+
+    std::ofstream myfile;
+    myfile.open("data.txt", std::ofstream::app);
+    myfile << ms_double.count() << ", " << missingVertices << ", ";
+    myfile.close();
+
     // modify slightly to return largest edge
     // return X[X.size() - 1];
     return std::accumulate(X.begin(), X.end(), 0.0);
+};
+
+int partition(edge* graph, int start, int end){
+    edge pivot = graph[start];
+
+    int count = 0;
+    for (int i = start + 1; i <= end; i++) {
+        if (graph[i].weight < pivot.weight) {
+            count ++;
+        }
+    }
+
+    int pivotIndex = start + count;
+    std::swap(graph[pivotIndex], graph[start]);
+
+    int i = start, j = end;
+ 
+    while (i < pivotIndex && j > pivotIndex) {
+ 
+        while (graph[i].weight <= pivot.weight) {
+            i++;
+        }
+ 
+        while (graph[j].weight > pivot.weight) {
+            j--;
+        }
+ 
+        if (i < pivotIndex && j > pivotIndex) {
+            std::swap(graph[i++], graph[j--]);
+        }
+    }
+ 
+    return pivotIndex;
+};
+
+void QuickSort(edge* graph, int start, int end){
+    // QuickSort, while potentially slower, has on average the same
+    // runtime as MergeSort. In addition, it's space complexity is
+    // O(log n) on average to MergeSort's O(n)
+    if (start >= end) {
+        return;
+    }
+
+    int p = partition(graph, start, end);
+    QuickSort(graph, start, p-1);
+    QuickSort(graph, p+1, end);
 };
 
 

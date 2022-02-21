@@ -51,6 +51,10 @@ std::pair<int, edge* > createGraph(int n, int d) {
             }
         }
 
+        // array to ensure validity
+        int validity[n];
+        memset( validity, 0, n*sizeof(int) );
+
          // generate edges from vertex i to vertex j
         for (int i = 0; i < n - 1; i++) {
             for (int j = i + 1; j < n; j++) {
@@ -81,19 +85,25 @@ std::pair<int, edge* > createGraph(int n, int d) {
                 }
             }
         }
+
+        // Check that all vertices are covered
+        // for (int i = 0; i < n; i++) {
+
+        // }
+
     }
 
     return std::make_pair(count, graph);
 
-    /* Testing sort 
-    printf("\n now we sort \n");
+    // // Testing sort 
+    // printf("\n now we sort \n");
 
-    MergeSort(graph, 0, numEdges-1);
+    // QuickSort(graph, 0, numEdges-1);
 
-    for (int i = 0; i < numEdges; i++) {
-        printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
-    }
-    */
+    // for (int i = 0; i < numEdges; i++) {
+    //     printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
+    // }
+    
 }
 
 // void destroyGraph(int numEdges, edge* graph) {
@@ -110,7 +120,7 @@ float random01() {
 }
 
 float findThreshold(int n, int d) {
-    if (n < 20) {
+    if (n < 2000) {
         return 1;
     }
     else if (n > 70000) {
@@ -129,32 +139,32 @@ float findThreshold(int n, int d) {
     }
     else if (n > 50000) {
         if (d == 0) {
-            return 0.00005;
+            return 0.0001;
         }
         else if (d == 2) {
-            return 0.005;
+            return 0.0045;
         }
         else if (d == 3) {
-            return 0.04;
+            return 0.025;
         }
         else if (d == 4) {
             return 0.08;
         }
     }
     else if (d == 0) {
-        float safety = 2/n;
+        float safety = 1000/n;
         return (1.65 * pow(n, -0.769)) + safety;
     }
     else if (d == 2) {
-        float safety = 2/n;
+        float safety = 1000/n;
         return (0.941 * pow(n, -0.423)) + safety;
     }
     else if (d == 3) {
-        float safety = 2/n;
+        float safety = 1000/n;
         return (0.923 * pow(n, -0.283)) + safety;
     }
     else if (d == 4) {
-        float safety = 2/n;
+        float safety = 0.003;
         return (1.07 * pow(n, -0.236)) + safety;
     }
     return 1;

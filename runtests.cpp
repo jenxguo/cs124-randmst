@@ -13,7 +13,7 @@ How to use:
 int main() {
     ofstream myfile;
     myfile.open ("data.txt");
-    myfile << ("numpoints, numtrials, dimension, avgWeight\n");
+    myfile << ("k_runtime1, missingV1, k_runtime2, missingV3, k_runtime3, missingV3, k_runtime4, missingV4, k_runtime5, missingV5, numpoints, numtrials, dimension, avgWeight, totaltime \n");
     myfile.close();
 
     int numpoints[11] = {128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072};
@@ -23,7 +23,7 @@ int main() {
             continue;
         }
 
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 10; i++) {
             int n = numpoints[i];
             std::string line = "./randmst 0 ";
             line += to_string(n);

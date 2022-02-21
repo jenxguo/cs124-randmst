@@ -10,12 +10,17 @@
 #include "graph.hpp"
 #include "randmst.hpp"
 #include "unionfind.hpp"
+#include <chrono>
 using namespace std;
 
 float calcAvgWeight(int flag, int n, int trials, int d);
 float getMSTWeight(int n, int d);
 
 int main(int argc, char *argv[]) {
+    using std::chrono::high_resolution_clock;
+    using std::chrono::duration;
+    using std::chrono::milliseconds;
+
     //checks that there are command line args
     if (argc != 5)
     {
@@ -33,13 +38,16 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    std::chrono::high_resolution_clock::time_point start = high_resolution_clock::now();
     float avgWeight = calcAvgWeight(flag, numpoints, numtrials, dimension);
+    std::chrono::high_resolution_clock::time_point end = high_resolution_clock::now();
 
     printf("%f %i %i %i\n", avgWeight, numpoints, numtrials, dimension);
 
+    duration<double, std::milli> ms_double = end - start;
     ofstream myfile;
     myfile.open("data.txt", ofstream::app);
-    myfile << numpoints << ", " << numtrials << ", " << dimension << ", " << avgWeight << endl;
+    myfile << numpoints << ", " << numtrials << ", " << dimension << ", " << avgWeight << ", " << ms_double.count() << endl;
     myfile.close();
     return 0;
 }
