@@ -13,6 +13,7 @@ void MergeSort(edge* graph, int l, int r);
 void Merge(edge* graph, int l, int m, int r);
 void QuickSort(edge* graph, int start, int end);
 int partition(edge* graph, int start, int end);
+void InsertionSort(edge* graph, int len);
 
 float Kruskals(edge* graph, int n, int numEdges){
     using std::chrono::high_resolution_clock;
@@ -29,7 +30,8 @@ float Kruskals(edge* graph, int n, int numEdges){
     std::vector<float> X;
 
     // Sort edges in ascending order
-    QuickSort(graph, 0, numEdges - 1);
+    // QuickSort(graph, 0, numEdges - 1);
+    InsertionSort(graph, numEdges);
 
     Node *nodes[n];
     for (int i = 0; i < n; i++) {
@@ -75,6 +77,26 @@ float Kruskals(edge* graph, int n, int numEdges){
     myfile.close();
 
     return std::accumulate(X.begin(), X.end(), 0.0);
+};
+
+void InsertionSort(edge* graph, int len) {
+    int i, j;
+    edge key;
+    for (i = 1; i < len; i++)
+    {
+        key = graph[i];
+        j = i - 1;
+ 
+        /* Move elements of arr[0..i-1], that are
+        greater than key, to one position ahead
+        of their current position */
+        while (j >= 0 && graph[j].weight > key.weight)
+        {
+            graph[j + 1] = graph[j];
+            j = j - 1;
+        }
+        graph[j + 1] = key;
+    }
 };
 
 int partition(edge* graph, int start, int end){
