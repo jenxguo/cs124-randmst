@@ -18,16 +18,16 @@ int main() {
 
     int numpoints[11] = {128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072};
 
-    for (int dimension = 0; dimension < 5; dimension++){
+    for (int dimension = 0; dimension < 1; dimension++){
         if (dimension == 1){
             continue;
         }
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 12; i++) {
             int n = numpoints[i];
             std::string line = "./randmst 0 ";
             line += to_string(n);
-            line += " 5 ";
+            line += " 10 ";
             line += to_string(dimension);
             std::system(line.c_str());
         }
