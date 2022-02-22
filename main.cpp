@@ -66,31 +66,14 @@ float getMSTWeight(int n, int d) {
 
     // reseed rand
     srand (static_cast <unsigned> (time(0)));
-    // initialize graph
-    // int numEdges = (n * (n-1)) / 2;
 
-    // std::vector<edge> graph;
-    // edge* graph = new edge[numEdges];
-
-    // populate graph with edge objects
+    // generate random graph
     std::pair<int, edge* > res = createGraph(n, d);
     int numEdges = std::get<0>(res);
     edge* graph = std::get<1>(res);
 
-    printf("num edges %i\n", numEdges);
-
-    // Test print Graph: feel free to comment out / remove later
-    // for (int i = 0; i < numEdges; i++) {
-    //     printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v, graph[i].u, graph[i].weight);
-    // }
-
     // generate MST
     float sumOfTotalMST = Kruskals(graph, n, numEdges);
-    printf("sum of total mst %f\n", sumOfTotalMST);
-
-    // destroy everything
-    // destroyGraph(numEdges, graph);
-    // delete[] graph;
 
     return sumOfTotalMST;
 }

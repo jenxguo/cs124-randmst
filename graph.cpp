@@ -12,8 +12,8 @@ float random01();
 float findThreshold(int n, int d);
 
 std::pair<int, edge* > createGraph(int n, int d) {
-    // int numEdges = (n+1)*(n)/2;
-    // edge **graph = malloc(cap * sizeof(edge*));
+
+    // initially malloc space for graph of size n
     int lenGraph = n;
     edge* graph = (edge*) malloc(lenGraph * sizeof(edge));
     int count = 0;
@@ -34,7 +34,7 @@ std::pair<int, edge* > createGraph(int n, int d) {
                     graph[count] = e;
                     count++;
                 }
-                // remalloc, increase size of graph array if need to
+                // remalloc, increase size of graph array if need be
                 if (count >= lenGraph) {
                     graph = (edge*) realloc((void*) graph, (lenGraph * 2) * sizeof(edge));
                     lenGraph *= 2;
@@ -85,35 +85,10 @@ std::pair<int, edge* > createGraph(int n, int d) {
                 }
             }
         }
-
-        // Check that all vertices are covered
-        // for (int i = 0; i < n; i++) {
-
-        // }
-
     }
 
-    return std::make_pair(count, graph);
-
-    // // Testing sort 
-    // printf("\n now we sort \n");
-
-    // QuickSort(graph, 0, numEdges-1);
-
-    // for (int i = 0; i < numEdges; i++) {
-    //     printf("graph index %i edge from vert %i to vert %i with weight %f\n", i, graph[i].v->val, graph[i].u->val, graph[i].weight);
-    // }
-    
+    return std::make_pair(count, graph);    
 }
-
-// void destroyGraph(int numEdges, edge* graph) {
-
-//     for (int i = 0; i < numEdges; i++) {
-//         printf("trying to free edge from %i to %i wit weight %f\n", graph[i].v, graph[i].u, graph[i].weight);
-//         delete &(graph[i]);
-//         printf("freed\n");
-//     }
-// }
 
 float random01() {
     return (float) (rand()) / (float) (RAND_MAX);

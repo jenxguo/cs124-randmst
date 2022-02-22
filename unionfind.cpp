@@ -24,17 +24,14 @@ Node* FIND(Node* node){
 /* Link two roots together. Return the root of the combined tree. */
 Node* LINK(Node* root1, Node* root2){
     if (root1->rank > root2->rank) {
-        // printf("linking v to u\n");
         root2->parent = root1;
         return root1;
     }
     else if (root2->rank > root1->rank) {
-        // printf("linking u to v\n");
         root1->parent = root2;
         return root2;
     }
     else {
-        // printf("linking equal v and u\n");
         root1->parent = root2;
         root2->rank++;
         return root2;

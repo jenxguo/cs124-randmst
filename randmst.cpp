@@ -36,40 +36,22 @@ float Kruskals(edge* graph, int n, int numEdges){
         nodes[i] = MAKESET(i);
     }
 
-    // printf("\nPOST SORT\n");
-    // // Test print Graph: feel free to comment out / remove later
-    // for (int i = 0; i < numEdges; i++) {
-    //     printf("%ith edge from vert %i to vert %i with weight %f\n", i, graph[i].v, graph[i].u, graph[i].weight);
-    // }
-
-    // printf("\nKRUSKALS\n");
-
     // Actual MST buidling phase
     int edgesAdded = 0;
     for (int i = 0; i < numEdges; i++){
         Node* nodeV = nodes[graph[i].v];
         Node* nodeU = nodes[graph[i].u];
-        // printf("%ith iteration, root nodeV %i is %i, root nodeU %i is %i\n", i, nodeV->val, nodeV->parent->val, nodeU->val, nodeU->parent->val);
         if (FIND(nodeV) != FIND(nodeU)){
             X.push_back(graph[i].weight);
-            // printf("edge (%i, %i) added\n", nodeV->val, nodeU->val);
             validity[nodeV->val] = 1;
             validity[nodeU->val] = 1;
             edgesAdded++;
             UNION(nodeV, nodeU);
         };
         if (edgesAdded == n - 1) {
-            printf("break now\n");
             break;
         }
     }; 
-
-    // printf("\nWEIGHTS IN MST\n");
-
-    // for (int i = 0; i < X.size(); i++) {
-    //     float p = X[i];
-    //     // printf("%ith weight in X: %f\n", i, p);
-    // }
 
     // destroy node
     for (int i = 0; i < n; i++) {
@@ -92,8 +74,6 @@ float Kruskals(edge* graph, int n, int numEdges){
     myfile << ms_double.count() << ", " << missingVertices << ", ";
     myfile.close();
 
-    // modify slightly to return largest edge
-    // return X[X.size() - 1];
     return std::accumulate(X.begin(), X.end(), 0.0);
 };
 
