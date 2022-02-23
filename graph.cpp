@@ -106,7 +106,7 @@ float findThreshold(int n, int d) {
             return 0.005;
         }
         else if (d == 3) {
-            return 0.027;
+            return 0.018;
         }
         else if (d == 4) {
             return 0.07; // 0.05
