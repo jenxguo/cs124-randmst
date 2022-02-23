@@ -27,7 +27,7 @@ int main() {
             int n = numpoints[i];
             std::string line = "./randmst 0 ";
             line += to_string(n);
-            line += " 10 ";
+            line += " 5 ";
             line += to_string(dimension);
             std::system(line.c_str());
         }
